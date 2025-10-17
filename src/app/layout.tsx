@@ -3,6 +3,7 @@ import { Metadata } from "next";
 
 // Shared
 import { cairo } from "@/shared/fonts";
+import { StoreProvider } from "@/shared/providers";
 // @ts-ignore
 import "@/shared/styles/globals.css";
 
@@ -21,7 +22,10 @@ export default function RootLayout({
       <body
         className={`${cairo.className} antialiased`}
       >
-        {children}
+        {/* Provides Redux Store */}
+        <StoreProvider>
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );

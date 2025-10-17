@@ -2,9 +2,11 @@
 
 // Libs
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { AlertCircleIcon } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
 // Components
 import { Button } from '@/shared/components/ui/button'
@@ -15,8 +17,14 @@ import { InputError } from '@/shared/components/ui/input-error'
 
 // Features
 import { NewUserSchema, type NewUserType } from '@/features/auth/schema'
+import { useSignupMutation } from '@/features/auth/service'
+import { setUser } from '@/features/auth/store'
 
 export default function SignUpForm() {
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const [signup, { isLoading }] = useSignupMutation()
+
     const {
         register,
         handleSubmit,
@@ -27,7 +35,20 @@ export default function SignUpForm() {
     })
 
     const onSubmit: SubmitHandler<NewUserType> = async (data) => {
-        console.log(data)
+        try {
+            const user = await signup(data).unwrap()
+            dispatch(setUser(user))
+
+            // Redirect to the home page after successful signup
+            router.replace('/')
+        } catch (error: any) {
+            const errors = error.data || error
+
+            // Display general server errors (not validation errors, such as server failure)
+            for (let errorKey in errors) {
+                setError(errorKey as keyof NewUserType, { message: errors[errorKey].message })
+            }
+        }
     }
 
     return (
@@ -41,13 +62,7 @@ export default function SignUpForm() {
                         Create Your Free Account
                     </h1>
                 </div>
-
-                <div
-                    id="root-error"
-                    aria-live="polite"
-                    aria-atomic="true"
-                    className="text-center"
-                >
+                <div id="root-error" aria-live="polite" aria-atomic="true" className="text-center">
                     {errors?.root && (
                         <Alert variant="destructive" className="my-4">
                             <AlertCircleIcon />
@@ -55,11 +70,10 @@ export default function SignUpForm() {
                         </Alert>
                     )}
                 </div>
-
                 <hr className="my-4 border-dashed" />
 
                 <div className="space-y-2">
-                    {/* Name */}
+                    {/* Full Name */}
                     <div>
                         <Label htmlFor="name" className="block text-md pb-1">
                             Full Name
@@ -94,9 +108,11 @@ export default function SignUpForm() {
 
                     {/* Password */}
                     <div>
-                        <Label htmlFor="password" className="text-md pb-1">
-                            Password
-                        </Label>
+                        <div className="flex items-center justify-between pb-1">
+                            <Label htmlFor="password" className="text-md">
+                                Password
+                            </Label>
+                        </div>
                         <Input
                             {...register('password')}
                             type="password"
@@ -111,9 +127,11 @@ export default function SignUpForm() {
 
                     {/* Password Confirmation */}
                     <div>
-                        <Label htmlFor="password_confirmation" className="text-md pb-1">
-                            Confirm Password
-                        </Label>
+                        <div className="flex items-center justify-between pb-1">
+                            <Label htmlFor="password-confirmation" className="text-md">
+                                Confirm Password
+                            </Label>
+                        </div>
                         <Input
                             {...register('password_confirmation')}
                             type="password"
@@ -124,15 +142,13 @@ export default function SignUpForm() {
                             aria-invalid={errors.password_confirmation ? 'true' : 'false'}
                         />
 
-                        <InputError
-                            error={errors.password_confirmation?.message || ''}
-                        />
+                        <InputError error={errors.password_confirmation?.message || ''} />
                     </div>
 
                     <Button
-                        className="w-full cursor-pointer mt-2 text-md"
+                        className="w-full cursor-pointer mt-4 text-md py-0 my-0"
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isLoading}
                     >
                         Sign Up Now
                     </Button>
@@ -143,7 +159,7 @@ export default function SignUpForm() {
                 <p className="text-accent-foreground text-center text-base">
                     Already have an account?
                     <Button asChild variant="link" className="px-2 text-base">
-                        <Link href="/auth/login">Log in</Link>
+                        <Link href="/auth/login">Sign In</Link>
                     </Button>
                 </p>
             </div>

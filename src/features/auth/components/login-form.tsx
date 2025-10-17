@@ -2,21 +2,29 @@
 
 // Libs
 import Link from 'next/link'
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from "react-hook-form"
-import { AlertCircleIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation'
+import { AlertCircleIcon } from 'lucide-react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
-// Shared
+// Components
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
-import { Alert, AlertTitle } from '@/shared/components/ui/alert';
-import { InputError } from '@/shared/components/ui/input-error';
+import { Alert, AlertTitle } from '@/shared/components/ui/alert'
+import { InputError } from '@/shared/components/ui/input-error'
 
 // Features
 import { LoginSchema, type LoginType } from '@/features/auth/schema'
+import { useLoginMutation } from '@/features/auth/service'
+import { setUser } from '@/features/auth/store'
 
 export default function LoginForm() {
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const [login, { isLoading }] = useLoginMutation()
+
     const {
         register,
         handleSubmit,
@@ -27,7 +35,20 @@ export default function LoginForm() {
     })
 
     const onSubmit: SubmitHandler<LoginType> = async (data) => {
-        console.log(data)
+        try {
+            const user = await login(data).unwrap()
+            dispatch(setUser(user))
+
+            // Redirect to the home page after successful login
+            router.replace('/')
+        } catch (error: any) {
+            const errors = error.data || error
+
+            // Display general server errors (not validation errors, e.g., server failure)
+            for (let errorKey in errors) {
+                setError(errorKey as keyof LoginType, { message: errors[errorKey].message })
+            }
+        }
     }
 
     return (
@@ -41,16 +62,14 @@ export default function LoginForm() {
                         Sign In
                     </h1>
                 </div>
-
-                <div id="root-error" aria-live="polite" aria-atomic="true" className='text-center'>
-                    {errors?.root &&
+                <div id="root-error" aria-live="polite" aria-atomic="true" className="text-center">
+                    {errors?.root && (
                         <Alert variant="destructive" className="my-4">
                             <AlertCircleIcon />
                             <AlertTitle>{errors.root?.message}</AlertTitle>
                         </Alert>
-                    }
+                    )}
                 </div>
-
                 <hr className="my-4 border-dashed" />
 
                 <div className="space-y-2">
@@ -60,40 +79,46 @@ export default function LoginForm() {
                             Email Address
                         </Label>
                         <Input
-                            {...register("email")}
+                            {...register('email')}
                             type="text"
                             name="email"
                             id="email"
                             className="py-0 my-0"
-                            aria-invalid={errors.email ? "true" : "false"}
+                            aria-invalid={errors.email ? 'true' : 'false'}
                         />
+
                         <InputError error={errors.email?.message || ''} />
                     </div>
 
                     {/* Password */}
-                    <div className="space-y-0.5">
+                    <div>
                         <Label htmlFor="password" className="text-md pb-1">
                             Password
                         </Label>
                         <Input
-                            {...register("password")}
+                            {...register('password')}
                             type="password"
                             name="password"
                             id="password"
                             className="input sz-md variant-mixed py-0 my-0"
-                            aria-invalid={errors.password ? "true" : "false"}
+                            aria-invalid={errors.password ? 'true' : 'false'}
                         />
+
                         <InputError error={errors.password?.message || ''} />
                     </div>
 
-                    <Button className="w-full cursor-pointer text-md mt-2" type="submit" disabled={isSubmitting}>
+                    <Button
+                        className="w-full cursor-pointer text-md py-0 my-0"
+                        type="submit"
+                        disabled={isSubmitting || isLoading}
+                    >
                         Sign In
                     </Button>
                 </div>
             </div>
 
-            <div className="bg-muted rounded-(--radius) border p-3 text-base">
-                <p className="text-accent-foreground text-center">
+            <div className="bg-muted rounded-(--radius) border p-3">
+                <p className="text-accent-foreground text-center text-base">
                     Don’t have an account?
                     <Button asChild variant="link" className="px-2 text-base">
                         <Link href="/auth/signup">Create your free account</Link>
