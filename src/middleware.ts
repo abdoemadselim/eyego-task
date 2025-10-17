@@ -5,6 +5,7 @@ function isProtectedRoute(request: NextRequest) {
 }
 
 export default async function middleware(request: NextRequest) {
+
     if (isProtectedRoute(request)) {
         try {
             const res = await fetch(`${process.env.API_URL}/auth/me`, {
@@ -28,6 +29,12 @@ export default async function middleware(request: NextRequest) {
         }
     }
 
+    if (request.nextUrl.pathname === "/auth/login" || request.nextUrl.pathname === "/auth/signup") {
+        if (request.cookies.has(process.env.AUTH_SESSION_NAME as string)) {
+            return NextResponse.redirect(new URL("/", request.url))
+        }
+    }
+
     return NextResponse.next()
 }
 
@@ -36,5 +43,7 @@ export const config = {
         // Skip Next.js internals and all static files, unless found in search params
         '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
         '/dashboard/:path*',
+        '/auth/login',
+        '/auth/signup',
     ],
 }
