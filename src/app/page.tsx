@@ -1,9 +1,5 @@
-import { Button } from "@/shared/components/ui/button";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return (
-    <div >
-      <Button>Hello world</Button>
-    </div>
-  );
+export default function HomePage() {
+  return redirect('/dashboard/products')
 }
