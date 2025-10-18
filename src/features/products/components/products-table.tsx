@@ -21,8 +21,9 @@ function ProductsTable() {
     // Prepare the params for the query
     const currentPage = Number(searchParams.get("page")) || 1;
     const pageSize = Number(searchParams.get("pageSize")) || 10;
+    const search = searchParams.get("search");
 
-    const { data, isError, isFetching, error } = useGetProductsQuery({ page: currentPage, page_size: pageSize })
+    const { data, isError, isFetching, error } = useGetProductsQuery({ page: currentPage, page_size: pageSize, search })
 
     // Prepare the pagination state for tanstack table to work properly
     const paginationState = {

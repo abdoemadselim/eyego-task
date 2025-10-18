@@ -29,14 +29,18 @@ export const productsApi = createApi({
         // Get products with pagination and search
         getProducts: builder.query<
             { products: ProductType[]; total: number },
-            { page: number; page_size: number }
+            { page: number; page_size: number, search: string | null }
         >({
-            query: ({ page, page_size }) => {
+            query: ({ page, page_size, search }) => {
                 const realPage = page > 0 ? page : 1
                 const params = new URLSearchParams({
                     page: String(realPage - 1),
                     pageSize: String(page_size),
                 })
+
+                if (search) {
+                    params.set('search', search)
+                }
 
                 return {
                     url: `/products?${params.toString()}`,
