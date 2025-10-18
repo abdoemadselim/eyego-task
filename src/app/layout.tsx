@@ -1,6 +1,6 @@
 // Libs
 import { Metadata } from "next";
-import { StoreProvider } from "@/app/providers";
+import { StoreProvider } from "@/providers";
 
 import { cairo } from "@/fonts";
 

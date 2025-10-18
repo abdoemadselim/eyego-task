@@ -1,9 +1,15 @@
-// Shared
-import { Button } from "@/shared/components/ui/button";
+// Libs
+import { Suspense } from "react";
 import { DownloadIcon } from "lucide-react";
 
-// Feature
-import { SearchInput, ProductsTable, ProductsExport } from "@/features/products/components";
+// Shared
+import DataTableSkeleton from "@/shared/components/data-table/data-table-skeleton";
+import { Button } from "@/shared/components/ui/button";
+
+// Features
+import { SearchInput } from "@/features/products/components";
+import { ProductsTable } from "@/features/products/components";
+import { ProductsExport } from "@/features/products/components";
 
 export default function ProductsPage() {
     return (
@@ -21,7 +27,9 @@ export default function ProductsPage() {
                     </Button>
                 </ProductsExport >
             </div>
-            <ProductsTable />
+            <Suspense fallback={<DataTableSkeleton />}>
+                <ProductsTable />
+            </Suspense>
         </div>
     )
 }
