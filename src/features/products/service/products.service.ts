@@ -29,9 +29,9 @@ export const productsApi = createApi({
         // Get products with pagination and search
         getProducts: builder.query<
             { products: ProductType[]; total: number },
-            { page: number; page_size: number, search: string | null }
+            { page: number; page_size: number, search: string | null, sort_by?: string | null, sort_order?: string | null }
         >({
-            query: ({ page, page_size, search }) => {
+            query: ({ page, page_size, search, sort_by, sort_order }) => {
                 const realPage = page > 0 ? page : 1
                 const params = new URLSearchParams({
                     page: String(realPage - 1),
@@ -40,6 +40,11 @@ export const productsApi = createApi({
 
                 if (search) {
                     params.set('search', search)
+                }
+
+                if (sort_by && sort_order) {
+                    params.set('sortBy', sort_by)
+                    params.set('sortOrder', sort_order)
                 }
 
                 return {

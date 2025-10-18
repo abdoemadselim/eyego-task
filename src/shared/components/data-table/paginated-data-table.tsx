@@ -8,6 +8,8 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  SortingState,
+  OnChangeFn,
 } from "@tanstack/react-table"
 
 // Shared
@@ -30,7 +32,15 @@ import {
 } from "@/shared/components/ui/table"
 import { Pagination, PaginationContent, PaginationItem } from "@/shared/components/ui/pagination"
 
-export function PaginatedDataTable<T>({ data, total, pagination, columns }: { data: T[], total: number, pagination: { pageIndex: number, pageSize: number }, columns: ColumnDef<T>[] }) {
+type PaginatedDataTableProps<T> = {
+  data: T[],
+  total: number,
+  pagination: { pageIndex: number, pageSize: number },
+  sorting?: SortingState,
+  columns: ColumnDef<T>[]
+}
+
+export function PaginatedDataTable<T>({ data, total, pagination, sorting, columns }: PaginatedDataTableProps<T>) {
   const searchParams = useSearchParams()
   const currentPage = Number(searchParams.get("page")) || 1;
   const pathname = usePathname();
@@ -56,6 +66,26 @@ export function PaginatedDataTable<T>({ data, total, pagination, columns }: { da
     router.push(`${pathname}?${params.toString()}`)
   }
 
+  const handleSortingChange: OnChangeFn<SortingState> = (updaterOrValue) => {
+    const newSorting = typeof updaterOrValue === 'function'
+      ? updaterOrValue(sorting || [])
+      : updaterOrValue
+
+    const params = new URLSearchParams(searchParams)
+
+    if (newSorting.length > 0) {
+      const sort = newSorting[0]
+      params.set('sortBy', sort.id)
+      params.set('sortOrder', sort.desc ? 'desc' : 'asc')
+    } else {
+      params.delete('sortBy')
+      params.delete('sortOrder')
+    }
+
+    params.set("page", "1") // reset to page 1 when sorting changes
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
   // Tanstack starts here
   const table = useReactTable({
     data,
@@ -63,7 +93,10 @@ export function PaginatedDataTable<T>({ data, total, pagination, columns }: { da
     rowCount: total,
     state: {
       pagination,
+      sorting: sorting || [],
     },
+    onSortingChange: handleSortingChange,
+    manualSorting: true,
     getRowId: (row: any) => row.id.toString(),
     getCoreRowModel: getCoreRowModel(),
   })

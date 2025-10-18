@@ -3,30 +3,53 @@ import {
     ColumnDef,
 } from "@tanstack/react-table"
 
+// Shared
+import SortableHeader from "@/shared/components/data-table/sortable-header"
+
 // Features
 import { ProductType } from "@/features/products/types"
 
 const columns: ColumnDef<ProductType>[] = [
     {
-        accessorKey: "name",
-        header: () => <p className="lg:text-lg pr-2 text-gray-500">Product Name</p>,
-        enableHiding: false,
+        accessorKey: "product_name",
+        header: ({ column }) => {
+            return (
+                <SortableHeader column={column} header={
+                    <p className="lg:text-lg pr-2 text-gray-500">Product Name</p>
+                } />
+            )
+        },
+        enableSorting: true,
         cell: (({ row }) => (
-            <p className="lg:text-lg pr-2 font-semibold">{row.original.name}</p>
+            <p className="lg:text-lg pr-2 font-semibold">{row.original.product_name}</p>
         ))
     },
     {
-        accessorKey: "category",
-        header: () => <p className="lg:text-lg pr-8 text-gray-500">Category</p>,
+        accessorKey: "category_name",
+        header: ({ column }) => {
+            return (
+                <SortableHeader column={column} header={
+                    <p className="lg:text-lg pr-8 text-gray-500">Category</p>
+                } />
+            )
+        },
+        enableSorting: true,
         cell: ({ row }) => (
             <p className="lg:text-lg pr-8 font-semibold">
-                {row.original.category}
+                {row.original.category_name}
             </p>
         ),
     },
     {
         accessorKey: "stock",
-        header: () => <p className="lg:text-lg pr-8 text-gray-500">Stock</p>,
+        header: ({ column }) => {
+            return (
+                <SortableHeader column={column} header={
+                    <p className="lg:text-lg pr-8 text-gray-500">Stock</p>
+                } />
+            )
+        },
+        enableSorting: true,
         cell: ({ row }) => (
             <p className="lg:text-lg pr-8 font-semibold">
                 {row.original.stock} in stock
@@ -35,7 +58,14 @@ const columns: ColumnDef<ProductType>[] = [
     },
     {
         accessorKey: "price",
-        header: () => <p className="lg:text-lg pr-8 text-gray-500">Price</p>,
+        header: ({ column }) => {
+            return (
+                <SortableHeader column={column} header={
+                    <p className="lg:text-lg pr-8 text-gray-500">Price</p>
+                } />
+            )
+        },
+        enableSorting: true,
         cell: ({ row }) => (
             <p className="lg:text-lg pr-8 font-semibold">
                 ${row.original.price}
@@ -44,7 +74,14 @@ const columns: ColumnDef<ProductType>[] = [
     },
     {
         accessorKey: "created_at",
-        header: () => <p className="lg:text-lg text-gray-500">Date Added</p>,
+        header: ({ column }) => {
+            return (
+                <SortableHeader column={column} header={
+                    <p className="lg:text-lg text-gray-500">Date Added</p>
+                } />
+            )
+        },
+        enableSorting: true,
         cell: ({ row }) => (
             <p className="lg:text-lg font-semibold">
                 {new Date(row.original.created_at).toLocaleDateString('en-US')}

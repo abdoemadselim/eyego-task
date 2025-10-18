@@ -2,8 +2,8 @@ import { ApiResponse } from "@/shared/types"
 
 export type ProductType = {
     id: number,
-    name: string,
-    category: string,
+    product_name: string,
+    category_name: string,
     price: number,
     stock: number,
     created_at: string,

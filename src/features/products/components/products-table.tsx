@@ -22,14 +22,28 @@ function ProductsTable() {
     const currentPage = Number(searchParams.get("page")) || 1;
     const pageSize = Number(searchParams.get("pageSize")) || 10;
     const search = searchParams.get("search");
+    const sortBy = searchParams.get("sortBy");
+    const sortOrder = searchParams.get("sortOrder");
 
-    const { data, isError, isFetching, error } = useGetProductsQuery({ page: currentPage, page_size: pageSize, search })
+    const { data, isError, isFetching, error } = useGetProductsQuery({
+        page: currentPage,
+        page_size: pageSize,
+        search,
+        sort_by: sortBy,
+        sort_order: sortOrder
+    })
 
     // Prepare the pagination state for tanstack table to work properly
     const paginationState = {
         pageIndex: currentPage - 1, // Why -1? Tanstack table is zero-indexed (so 1st page is 0 not 1)
         pageSize
     }
+
+    // Prepare the sorting state for tanstack table
+    const sortingState = sortBy && sortOrder ? [{
+        id: sortBy,
+        desc: sortOrder === 'desc'
+    }] : []
 
     // Handle loading state
     if (isFetching) {
@@ -41,13 +55,15 @@ function ProductsTable() {
             {isError &&
                 <Alert variant="destructive" className="w-fit px-6 mb-4">
                     <AlertCircleIcon />
-                    <AlertTitle>{error?.root?.message}</AlertTitle>
+                    <AlertTitle>{(error as any)?.root?.message || 'An error occurred'}</AlertTitle>
                 </Alert>
             }
             <PaginatedDataTable<ProductType>
                 data={data?.products || []}
                 total={data?.total || 0}
-                pagination={paginationState} columns={columns}
+                pagination={paginationState}
+                sorting={sortingState}
+                columns={columns}
             />
         </>
     )
