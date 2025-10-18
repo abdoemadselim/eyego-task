@@ -5,6 +5,7 @@ import { DownloadIcon } from "lucide-react";
 // Shared
 import DataTableSkeleton from "@/shared/components/data-table/data-table-skeleton";
 import { Button } from "@/shared/components/ui/button";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 
 // Features
 import { SearchInput } from "@/features/products/components";
@@ -20,12 +21,14 @@ export default function ProductsPage() {
                     <SearchInput />
                 </div>
 
-                <ProductsExport >
-                    <Button className="px-2 py-2 border-1 bg-secondary text-black hover:bg-gray-200 cursor-pointer border-gray-300 gap-3">
-                        <DownloadIcon />
-                        <span>Export</span>
-                    </Button>
-                </ProductsExport >
+                <Suspense fallback={<Skeleton className="w-10 h-10" />}>
+                    <ProductsExport >
+                        <Button className="px-2 py-2 border-1 bg-secondary text-black hover:bg-gray-200 cursor-pointer border-gray-300 gap-3">
+                            <DownloadIcon />
+                            <span>Export</span>
+                        </Button>
+                    </ProductsExport >
+                </Suspense>
             </div>
             <Suspense fallback={<DataTableSkeleton />}>
                 <ProductsTable />

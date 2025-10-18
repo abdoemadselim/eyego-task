@@ -14,7 +14,7 @@ import { ProductType } from "@/features/products/types";
 import { columns } from "@/features/products/components";
 import { useGetProductsQuery } from "@/features/products/service";
 
-function ProductsTable() {
+export default function ProductsTable() {
     // Get the page, pageSize params from the url
     const searchParams = useSearchParams()
 
@@ -68,5 +68,3 @@ function ProductsTable() {
         </>
     )
 }
-
-export default ProductsTable;
