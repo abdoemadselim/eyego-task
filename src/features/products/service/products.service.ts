@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 
 // Shared
-import { transformErrorResponse } from '@/shared/lib/api.utils'
+import { transformErrorResponse } from '@/shared/utils/api.utils'
 
 // Features
 import type { ProductType, CategoryType, ProductsResponse } from '@/features/products/types'

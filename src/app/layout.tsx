@@ -1,10 +1,11 @@
 // Libs
 import { Metadata } from "next";
+import { StoreProvider } from "@/app/providers";
+
+import { cairo } from "@/fonts";
 
 // Shared
-import { cairo } from "@/fonts";
-import { StoreProvider } from "@/app/providers";
-// @ts-ignore
+import { Toaster } from "@/shared/components/ui/sonner";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
         <StoreProvider>
           {children}
         </StoreProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );
