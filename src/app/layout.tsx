@@ -1,11 +1,12 @@
 // Libs
 import { Metadata } from "next";
+import { StoreProvider } from "@/app/providers";
+
+import { cairo } from "@/fonts";
 
 // Shared
-import { cairo } from "@/shared/fonts";
-import { StoreProvider } from "@/shared/providers";
-// @ts-ignore
-import "@/shared/styles/globals.css";
+import { Toaster } from "@/shared/components/ui/sonner";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "EyeGo AIoT platform for smart hospitality",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <StoreProvider>
           {children}
         </StoreProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

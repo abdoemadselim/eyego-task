@@ -1,8 +1,8 @@
 // Libs
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 
 // Share
-import { transformErrorResponse } from '@/shared/lib/api.utils';
+import { transformErrorResponse } from '@/shared/utils/api.utils';
 
 // Features
 import type { AuthResponse, User } from '@/features/auth/types'
@@ -10,9 +10,13 @@ import type { LoginType, NewUserType } from '@/features/auth/schema'
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: '/api/auth',
-    }),
+    baseQuery: retry(
+        fetchBaseQuery({
+            baseUrl: '/api/auth',
+            credentials: 'include',
+        }),
+        { maxRetries: 3 }
+    ),
     tagTypes: ['Auth'],
     endpoints: (builder) => ({
         // Get current user
@@ -21,7 +25,7 @@ export const authApi = createApi({
                 url: '/me',
                 cache: 'no-store' as RequestCache,
             }),
-             // Backend response follows this structure {data: {}, errors: [""], fieldErrors: {field: {message: ""}}}
+            // Backend response follows this structure {data: {}, errors: [""], fieldErrors: {field: {message: ""}}}
             transformResponse: (response: AuthResponse) => response.data.user,
             providesTags: ['Auth'],
         }),
