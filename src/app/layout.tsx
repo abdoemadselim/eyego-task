@@ -2,8 +2,8 @@
 import { Metadata } from "next";
 
 // Shared
-import { cairo } from "@/shared/fonts";
-import { StoreProvider } from "@/shared/providers";
+import { cairo } from "@/fonts";
+import { StoreProvider } from "@/app/providers";
 // @ts-ignore
 import "@/app/globals.css";
 

@@ -6,64 +6,60 @@ import {
 // Features
 import { ProductType } from "@/features/products/types"
 
-export const columns: ColumnDef<ProductType>[] = [
+const columns: ColumnDef<ProductType>[] = [
     {
         accessorKey: "name",
-        header: () => <p className="lg:text-lg pr-2">Product Name</p>,
+        header: () => <p className="lg:text-lg pr-2 text-gray-500">Product Name</p>,
         enableHiding: false,
         cell: (({ row }) => (
-            <p className="lg:text-lg pr-2">{row.original.name}</p>
+            <p className="lg:text-lg pr-2 font-semibold">{row.original.name}</p>
         ))
     },
     {
         accessorKey: "category",
-        header: () => <p className="lg:text-lg pr-8">Category</p>,
+        header: () => <p className="lg:text-lg pr-8 text-gray-500">Category</p>,
         cell: ({ row }) => (
-            <div className="lg:text-lg pr-8">
-                <p className="lg:text-lg pr-2">
-                    {row.original.category}
-                </p>
-            </div>
+            <p className="lg:text-lg pr-8 font-semibold">
+                {row.original.category}
+            </p>
         ),
     },
     {
         accessorKey: "stock",
-        header: () => <p className="lg:text-lg pr-8">Stock</p>,
+        header: () => <p className="lg:text-lg pr-8 text-gray-500">Stock</p>,
         cell: ({ row }) => (
-            <div className="lg:text-lg pr-8">
-                <p className="lg:text-lg pr-2">
-                    {row.original.stock}
-                </p>
-            </div>
+            <p className="lg:text-lg pr-8 font-semibold">
+                {row.original.stock} in stock
+            </p>
         ),
     },
     {
         accessorKey: "price",
-        header: () => <p className="lg:text-lg pr-8">Price</p>,
+        header: () => <p className="lg:text-lg pr-8 text-gray-500">Price</p>,
         cell: ({ row }) => (
-            <div className="lg:text-lg pr-8">
-                <p className="lg:text-lg pr-2">
-                    ${row.original.price}
-                </p>
-            </div>
+            <p className="lg:text-lg pr-8 font-semibold">
+                ${row.original.price}
+            </p>
         ),
     },
     {
         accessorKey: "created_at",
-        header: () => <p className="lg:text-lg">Date Added</p>,
+        header: () => <p className="lg:text-lg text-gray-500">Date Added</p>,
         cell: ({ row }) => (
-            <div className="lg:text-lg text-gray-600">
+            <p className="lg:text-lg font-semibold">
                 {new Date(row.original.created_at).toLocaleDateString('en-US')}
-            </div>
+            </p>
         ),
     },
     {
         accessorKey: "description",
-        header: () => <p className="lg:text-lg">Description</p>,
+        header: () => <p className="lg:text-lg text-gray-500">Description</p>,
         cell: ({ row }) => (
-            <div className="lg:text-md">
+            <p className="lg:text-md font-semibold">
                 {row.original.description}
-            </div>
+            </p>
         ),
     },
 ]
+
+export default columns

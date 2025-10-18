@@ -21,7 +21,7 @@ import {
     SidebarSeparator,
 } from "@/shared/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu"
-import { RootState } from "@/shared/lib/store"
+import { RootState } from "@/store"
 
 // Features
 import { useLogoutMutation } from "@/features/auth/service"

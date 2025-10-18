@@ -1,3 +1,5 @@
+import { ApiResponse } from "@/shared/types"
+
 export type ProductType = {
     id: number,
     name: string,
@@ -11,4 +13,11 @@ export type ProductType = {
 export type CategoryType = {
     id: number,
     name: string
+}
+
+export type ProductsResponse = ApiResponse & {
+    data: {
+        products: ProductType[]
+        total: number
+    }
 }

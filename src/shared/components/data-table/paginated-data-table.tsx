@@ -68,7 +68,10 @@ export function PaginatedDataTable<T>({ data, total, pagination, columns }: { da
     getCoreRowModel: getCoreRowModel(),
   })
 
-  const pageSizes = Array.from({ length: Math.ceil(total / 10) }, (_, i) => (i + 1) * 10)
+  const pageSizes = []
+  for (let size = 10; size <= Math.min(total, 40); size += 10) {
+    pageSizes.push(size)
+  }
 
   return (
     <div
@@ -179,7 +182,7 @@ export function PaginatedDataTable<T>({ data, total, pagination, columns }: { da
                     <PaginationItem key={pageIndex}>
                       <Link
                         href={createPageUrl(pageIndex + 1)}
-                        className={`px-3 ${pageIndex == pagination.pageIndex ? 'bg-primary text-white' : 'text-primary border-2'} rounded-sm text-lg cursor-pointer`}
+                        className={`px-3 ${pageIndex == pagination.pageIndex ? 'bg-primary text-white' : 'text-primary border-1 border-gray-300'} rounded-sm text-lg cursor-pointer`}
                       >
                         {pageIndex + 1}
                       </Link>
@@ -200,7 +203,6 @@ export function PaginatedDataTable<T>({ data, total, pagination, columns }: { da
           </Pagination>
         </div>
       </div>
-
     </div>
   )
 }

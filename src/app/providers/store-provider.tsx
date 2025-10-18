@@ -5,7 +5,7 @@ import { Provider, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 
 // Shared
-import { store } from '@/shared/lib/store'
+import { store } from '@/store'
 
 // Features
 import { clearUser, setUser, setIsLoading } from '@/features/auth/store'
