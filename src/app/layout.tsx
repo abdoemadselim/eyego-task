@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { cairo } from "@/shared/fonts";
 import { StoreProvider } from "@/shared/providers";
 // @ts-ignore
-import "@/shared/styles/globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "EyeGo AIoT platform for smart hospitality",
