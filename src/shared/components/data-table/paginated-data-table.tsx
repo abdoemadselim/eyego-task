@@ -114,7 +114,7 @@ export function PaginatedDataTable<T>({ data, total, pagination, sorting, column
         <div
         >
           <Table className="bg-white">
-            <TableHeader className="bg-primary-foreground sticky top-0 z-10">
+            <TableHeader className="bg-primary-foreground sticky top-0 z-0">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {

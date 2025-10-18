@@ -7,6 +7,7 @@ import { useDebouncedCallback } from 'use-debounce';
 
 // Components
 import { Input } from "@/shared/components/ui/input"
+import { useSidebar } from "@/shared/components/ui/sidebar";
 
 function SearchInput({ disabled }: { disabled?: boolean }) {
     const { replace } = useRouter()
@@ -28,7 +29,7 @@ function SearchInput({ disabled }: { disabled?: boolean }) {
     }, 150);
 
     return (
-        <div className="py-4 pl-4 sm:px-0 sm:min-w-[400px] w-[100%]">
+        <div className="py-4 sm:min-w-[400px] w-[100%]">
             <div className="relative max-w-sm">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input

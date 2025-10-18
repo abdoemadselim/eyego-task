@@ -14,7 +14,7 @@ export default function DataTableSkeleton() {
     <div className="relative flex flex-col gap-4 overflow-auto">
       <div className="overflow-hidden rounded-lg border">
         <Table className="bg-white/30">
-          <TableHeader className="bg-primary-foreground/30 sticky top-0 z-10">
+          <TableHeader className="bg-primary-foreground/30 sticky top-0 z-0">
             <TableRow>
               <TableHead className="w-8">
                 <Skeleton className="h-4 w-4" />

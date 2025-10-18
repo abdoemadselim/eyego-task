@@ -18,7 +18,6 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarSeparator,
 } from "@/shared/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu"
 import { RootState } from "@/store"
@@ -41,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { user, isLoading } = useSelector((state: RootState) => state.auth)
 
     return (
-        <Sidebar collapsible="offcanvas" {...props}>
+        <Sidebar variant="sidebar" collapsible="offcanvas" {...props}>
             <SidebarHeader >
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -102,7 +101,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 }}>
                                     <LogOut color="red" />
                                     <span className="text-red-500 hover:text-red-500 text-lg">Log out</span>
-
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

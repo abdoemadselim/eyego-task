@@ -17,10 +17,10 @@ export default function DashboardLayout({
                 } as React.CSSProperties
             } >
             <AppSidebar className="pt-4" />
-            <SidebarInset className=" bg-primary/10">
+            <main className="bg-primary/10 w-full">
                 <SiteHeader />
                 {children}
-            </SidebarInset>
+            </main>
         </SidebarProvider>
     );
 }
