@@ -12,7 +12,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { openToaster } from "@/shared/components/ui/sonner";
 
 // Features
-import { useGetProductsQuery } from "@/features/products/service";
+import { useLazyGetProductsQuery } from "@/features/products/service";
 import { handlePdfExport, handleXlsxExport } from "@/features/products/utils";
 
 export default function ProductsExport({ children }: { children: React.ReactNode }) {
@@ -24,22 +24,21 @@ export default function ProductsExport({ children }: { children: React.ReactNode
     const sortBy = searchParams.get("sortBy");
     const sortOrder = searchParams.get("sortOrder");
 
-    // Fetch ALL products with current filters
-    const { refetch } = useGetProductsQuery({
-        page: 1,
-        page_size: 10000, // Large number to get all products
-        search,
-        sort_by: sortBy,
-        sort_order: sortOrder
-    })
+    const [trigger] = useLazyGetProductsQuery()
 
     const handleExport = async (exportType: 'pdf' | 'xlsx') => {
         setIsExporting(true)
         try {
-            const result = await refetch()
-            const products = result.data?.products || [];
+            const data = await trigger({
+                page: 1,
+                page_size: 10000, // Large number to get all products
+                search,
+                sort_by: sortBy,
+                sort_order: sortOrder
+            }).unwrap()
 
-            // Use generic export functions with product config
+            const products = data?.products || [];
+
             if (exportType === 'pdf') {
                 await handlePdfExport(products)
             } else if (exportType === 'xlsx') {
@@ -47,7 +46,7 @@ export default function ProductsExport({ children }: { children: React.ReactNode
             }
         } catch (error) {
             console.error('Export failed:', error)
-            openToaster('Export failed', 'error');
+            openToaster('Sorry, export failed. Please try again later.', 'error');
         } finally {
             setIsExporting(false)
         }
