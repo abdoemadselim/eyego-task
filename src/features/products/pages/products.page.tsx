@@ -18,7 +18,9 @@ export default function ProductsPage() {
             <div className="flex sm:justify-between sm:items-center flex-col sm:flex-row items-start">
                 <div className="flex sm:flex-row flex-col items-start sm:items-center sm:gap-8 w-full">
                     <h1 className="text-xl pt-2 font-bold sm:py-4">Products</h1>
-                    <SearchInput />
+                    <Suspense fallback={<Skeleton className="sm:min-w-[400px] w-[100%] h-10" />}>
+                        <SearchInput />
+                    </Suspense>
                 </div>
 
                 <Suspense fallback={<Skeleton className="w-10 h-10" />}>

@@ -25,7 +25,6 @@ export default function ProductsExport({ children }: { children: React.ReactNode
     const sortOrder = searchParams.get("sortOrder");
 
     // Fetch ALL products with current filters
-    // Use skip: true to prevent automatic fetching, only fetch when needed
     const { refetch } = useGetProductsQuery({
         page: 1,
         page_size: 10000, // Large number to get all products

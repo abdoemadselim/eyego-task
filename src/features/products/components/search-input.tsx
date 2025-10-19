@@ -5,11 +5,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { useDebouncedCallback } from 'use-debounce';
 
-// Components
+// Shared
 import { Input } from "@/shared/components/ui/input"
-import { useSidebar } from "@/shared/components/ui/sidebar";
 
-function SearchInput({ disabled }: { disabled?: boolean }) {
+export default function SearchInput({ disabled }: { disabled?: boolean }) {
     const { replace } = useRouter()
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -44,5 +43,3 @@ function SearchInput({ disabled }: { disabled?: boolean }) {
         </div>
     )
 }
-
-export default SearchInput
