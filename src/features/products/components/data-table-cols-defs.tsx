@@ -22,7 +22,7 @@ const columns: ColumnDef<ProductType>[] = [
         enableSorting: true,
         cell: (({ row }) => (
             <p className="lg:text-lg pr-2 font-semibold">
-                {row.original.product_name !== undefined ?
+                {row.original.product_name ?
                     row.original.product_name
                     : <span className="text-gray-500">N/A</span>
                 }
@@ -41,7 +41,7 @@ const columns: ColumnDef<ProductType>[] = [
         enableSorting: true,
         cell: ({ row }) => (
             <p className="lg:text-lg pr-8 font-semibold">
-                {row.original.category_name !== undefined ?
+                {row.original.category_name ?
                     row.original.category_name
                     : <span className="text-gray-500">N/A</span>
                 }
@@ -100,7 +100,7 @@ const columns: ColumnDef<ProductType>[] = [
         enableSorting: true,
         cell: ({ row }) => (
             <p className="lg:text-lg pr-8 font-semibold">
-                {row.original.price ?
+                {row.original.price !== undefined ?
                     <span >${row.original.price}</span>
                     : <span className="text-gray-500">N/A</span>
                 }
