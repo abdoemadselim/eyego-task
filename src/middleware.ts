@@ -30,7 +30,7 @@ export default async function middleware(request: NextRequest) {
     }
 
     if (request.nextUrl.pathname === "/auth/login" || request.nextUrl.pathname === "/auth/signup") {
-        if (request.cookies.has(process.env.AUTH_SESSION_NAME as string)) {
+        if (request.cookies.has(process.env.AUTH_SESSION_NAME || "eyego-session")) {
             return NextResponse.redirect(new URL("/", request.url))
         }
     }
