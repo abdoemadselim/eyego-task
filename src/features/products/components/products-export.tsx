@@ -59,7 +59,7 @@ export default function ProductsExport({ children }: { children: React.ReactNode
                 {children}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuItem variant="default" className="cursor-pointer bg-secondary justify-start text-gray-700 hover:bg-gray-200 " asChild>
+                <DropdownMenuItem variant="default" className="cursor-pointer bg-secondary justify-start text-gray-700 focus-visible:ring-[0]" asChild>
                     <Button
                         className="w-full text-start"
                         onClick={() => handleExport('pdf')}
@@ -69,7 +69,7 @@ export default function ProductsExport({ children }: { children: React.ReactNode
                         <span>{isExporting ? 'Exporting...' : 'PDF'}</span>
                     </Button>
                 </DropdownMenuItem>
-                <DropdownMenuItem variant="default" className="cursor-pointer bg-secondary justify-start text-gray-700 hover:bg-gray-200 " asChild>
+                <DropdownMenuItem variant="default" className="cursor-pointer bg-secondary justify-start text-gray-700 focus-visible:ring-[0]" asChild>
                     <Button
                         className="w-full text-start"
                         onClick={() => handleExport('xlsx')}
