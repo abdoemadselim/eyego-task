@@ -19,7 +19,7 @@ export default function AuthLayout({
                     fetchPriority="high"
                 />
             </Link>
-            <section className="flex justify-center pt-4">
+            <section className="flex justify-center pt-4 px-0">
                 {children}
             </section>
         </div>
