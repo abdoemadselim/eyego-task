@@ -36,10 +36,7 @@ const chartConfig = {
 
 export default function TopProductsSalesChart({ productsData, productsCount }: { productsData: Pick<ProductType, "product_name" | "sales">[], productsCount: number }) {
     const [chartData] = useState(() => {
-        return productsData.sort((a, b) => b.sales - a.sales).slice(0, productsCount).map((product, index) => ({
-            ...product,
-            fill: `var(--color-chart-${index + 1})`,
-        })) as typeof productsData
+        return productsData.sort((a, b) => b.sales - a.sales).slice(0, productsCount)
     })
 
     return (
@@ -63,6 +60,7 @@ export default function TopProductsSalesChart({ productsData, productsCount }: {
                             type="category"
                             tickLine={false}
                             tickMargin={5}
+                            width={80}
                             axisLine={false}
                         />
                         <XAxis dataKey="sales" type="number" hide />
@@ -70,7 +68,7 @@ export default function TopProductsSalesChart({ productsData, productsCount }: {
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
                         />
-                        <Bar dataKey="sales" layout="vertical" radius={5} className="max-w-full" />
+                        <Bar dataKey="sales" fill="var(--color-chart-3)" layout="vertical" radius={5} className="max-w-full" />
                     </BarChart>
                 </ChartContainer>
             </CardContent>
