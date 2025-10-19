@@ -1,5 +1,5 @@
 // Libs
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { DownloadIcon } from "lucide-react";
 
 // Shared
@@ -11,7 +11,9 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 import { SearchInput } from "@/features/products/components";
 import { ProductsTable } from "@/features/products/components";
 import { ProductsExport } from "@/features/products/components";
-import { TopProductsSalesChart } from "@/features/analytics/components";
+
+const TopProductsSalesChart = lazy(() => import("@/features/analytics/components").then(module => ({ default: module.TopProductsSalesChart, ssr: false })));
+
 import { topProductsSalesData } from "@/features/products/service";
 
 export default function ProductsPage() {
