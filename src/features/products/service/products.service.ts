@@ -5,15 +5,7 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 import { transformErrorResponse } from '@/shared/utils/api.utils'
 
 // Features
-import type { ProductType, CategoryType, ProductsResponse } from '@/features/products/types'
-
-interface CategoriesResponse {
-    data: {
-        categories: CategoryType[]
-    }
-    errors?: string[]
-    fieldErrors?: Record<string, { message: string }>
-}
+import type { ProductType, CategoryType, ProductsResponse, CategoriesResponse } from '@/features/products/types'
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
@@ -62,6 +54,16 @@ export const productsApi = createApi({
                     : [{ type: 'Products', id: 'LIST' }],
         }),
 
+        // Get top products sales
+        getTopProductsSales: builder.query<{ products: ProductType[] }, void>({
+            query: () => ({
+                url: '/products/top-sales',
+            }),
+            transformResponse: (response: ProductsResponse) => response.data,
+            transformErrorResponse,
+            providesTags: [{ type: 'Products', id: 'LIST' }],
+        }),
+
         // Get categories
         getCategories: builder.query<{ categories: CategoryType[] }, void>({
             query: () => ({
@@ -78,5 +80,35 @@ export const {
     useGetProductsQuery,
     useGetCategoriesQuery,
     useLazyGetProductsQuery,
+    useGetTopProductsSalesQuery,
 } = productsApi
 
+export const topProductsSalesData = {
+    products: [
+        {
+            id: 1,
+            product_name: 'Samsung Galaxy S23',
+            sales: 100,
+        },
+        {
+            id: 2,
+            product_name: 'Apple iPhone 15',
+            sales: 200,
+        },
+        {
+            id: 3,
+            product_name: 'Google Pixel 8',
+            sales: 300,
+        },
+        {
+            id: 4,
+            product_name: 'OnePlus 12',
+            sales: 400,
+        },
+        {
+            id: 5,
+            product_name: 'Xiaomi 14',
+            sales: 500,
+        },
+    ],
+}

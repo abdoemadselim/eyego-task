@@ -41,6 +41,22 @@ const columns: ColumnDef<ProductType>[] = [
         ),
     },
     {
+        accessorKey: "sales",
+        header: ({ column }) => {
+            return (
+                <SortableHeader column={column} header={
+                    <p className="lg:text-lg pr-8 text-gray-500">Sales</p>
+                } />
+            )
+        },
+        enableSorting: true,
+        cell: ({ row }) => (
+            <p className="lg:text-lg pr-8 font-semibold">
+                {row.original.sales}
+            </p>
+        ),
+    },
+    {
         accessorKey: "stock",
         header: ({ column }) => {
             return (
