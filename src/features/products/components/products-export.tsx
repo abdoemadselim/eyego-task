@@ -1,8 +1,7 @@
 'use client'
 
 // Libs
-import { FileIcon } from "lucide-react";
-import { FileXIcon } from "lucide-react";
+import { FileIcon, FileXIcon, Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -54,7 +53,7 @@ export default function ProductsExport({ children }: { children: React.ReactNode
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild disabled={isExporting}>
+            <DropdownMenuTrigger asChild disabled={isExporting} >
                 {children}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -64,7 +63,11 @@ export default function ProductsExport({ children }: { children: React.ReactNode
                         onClick={() => handleExport('pdf')}
                         disabled={isExporting}
                     >
-                        <FileIcon />
+                        {isExporting ? (
+                            <Loader2 className="animate-spin" />
+                        ) : (
+                            <FileIcon />
+                        )}
                         <span>{isExporting ? 'Exporting...' : 'PDF'}</span>
                     </Button>
                 </DropdownMenuItem>
@@ -74,7 +77,11 @@ export default function ProductsExport({ children }: { children: React.ReactNode
                         onClick={() => handleExport('xlsx')}
                         disabled={isExporting}
                     >
-                        <FileXIcon />
+                        {isExporting ? (
+                            <Loader2 className="animate-spin" />
+                        ) : (
+                            <FileXIcon />
+                        )}
                         <span>{isExporting ? 'Exporting...' : 'Excel'}</span>
                     </Button>
                 </DropdownMenuItem>

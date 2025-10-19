@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 import { transformErrorResponse } from '@/shared/utils/api.utils'
 
 // Features
-import type { ProductType, CategoryType, ProductsResponse, CategoriesResponse } from '@/features/products/types'
+import type { ProductType, ProductsResponse } from '@/features/products/types'
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
@@ -16,7 +16,7 @@ export const productsApi = createApi({
         }),
         { maxRetries: 3 }
     ),
-    tagTypes: ['Products', 'Categories'],
+    tagTypes: ['Products'],
     endpoints: (builder) => ({
         // Get products with pagination and search
         getProducts: builder.query<
@@ -63,22 +63,11 @@ export const productsApi = createApi({
             transformErrorResponse,
             providesTags: [{ type: 'Products', id: 'LIST' }],
         }),
-
-        // Get categories
-        getCategories: builder.query<{ categories: CategoryType[] }, void>({
-            query: () => ({
-                url: '/categories',
-            }),
-            transformResponse: (response: CategoriesResponse) => response.data,
-            transformErrorResponse,
-            providesTags: [{ type: 'Categories', id: 'LIST' }],
-        }),
     }),
 })
 
 export const {
     useGetProductsQuery,
-    useGetCategoriesQuery,
     useLazyGetProductsQuery,
     useGetTopProductsSalesQuery,
 } = productsApi

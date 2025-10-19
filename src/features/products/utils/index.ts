@@ -1,1 +1,1 @@
-export * from "./products-export"
+export * from "./products-export.utils"

@@ -113,6 +113,7 @@ export const handleXlsxExport = async (data: any[]) => {
     'Product': item.product_name,
     'Category': item.category_name,
     'Stock': item.stock,
+    'Sales': item.sales,
     'Price': `$${Number(item.price).toFixed(2)}`,
     'Created At': new Date(item.created_at).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -123,7 +124,7 @@ export const handleXlsxExport = async (data: any[]) => {
 
   // Create worksheet from formatted data
   const worksheet = XLSX.utils.json_to_sheet(formattedData, {
-    header: ['Product', 'Category', 'Stock', 'Price', 'Created At']
+    header: ['Product', 'Category', 'Stock', 'Sales', 'Price', 'Created At']
   });
 
   // Set column widths
@@ -131,6 +132,7 @@ export const handleXlsxExport = async (data: any[]) => {
     { wch: 30 }, // Product Name
     { wch: 20 }, // Category
     { wch: 10 }, // Stock
+    { wch: 10 }, // Sales
     { wch: 12 }, // Price
     { wch: 18 }, // Created At
   ];
