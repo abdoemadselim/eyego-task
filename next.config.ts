@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Enable standalone output for Docker deployment
+  // This creates a minimal production server with only necessary files
+  output: 'standalone',
+
   async rewrites() {
     return [
       // Proxy UI routes (public stuff)
