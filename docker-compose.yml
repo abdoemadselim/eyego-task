@@ -20,7 +20,7 @@ services:
     # Environment variables
     environment:
       - NODE_ENV=production
-      - API_URL=${API_URL:-http://localhost:8000}
+      - API_URL=${API_URL:-https://products-repo-production.up.railway.app}
     
     # Health check to ensure the application is running
     healthcheck:
