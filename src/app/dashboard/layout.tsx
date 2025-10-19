@@ -1,7 +1,7 @@
 // Shared
-import { AppSidebar } from "@/shared/components/sidebar/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/shared/components/ui/sidebar";
-import { SiteHeader } from "@/shared/components/ui/sidebar-trigger";
+import { AppSidebar } from "@/shared/components/layout/app-sidebar";
+import { SidebarProvider } from "@/shared/components/ui/sidebar";
+import { SidebarHeader } from "@/shared/components/layout/sidebar-header";
 
 export default function DashboardLayout({
     children,
@@ -18,7 +18,7 @@ export default function DashboardLayout({
             } >
             <AppSidebar className="pt-4" />
             <main className="bg-primary/10 w-full">
-                <SiteHeader />
+                <SidebarHeader />
                 {children}
             </main>
         </SidebarProvider>
