@@ -1,0 +1,1 @@
+export { default as TopProductsSalesChart } from "./top-products-sales-chart";

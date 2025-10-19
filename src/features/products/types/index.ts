@@ -6,6 +6,7 @@ export type ProductType = {
     category_name: string,
     price: number,
     stock: number,
+    sales: number,
     created_at: string,
     description: string
 }
@@ -19,5 +20,11 @@ export type ProductsResponse = ApiResponse & {
     data: {
         products: ProductType[]
         total: number
+    }
+}
+
+export type CategoriesResponse = ApiResponse & {
+    data: {
+        categories: CategoryType[]
     }
 }

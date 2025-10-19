@@ -6,6 +6,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { redirect, usePathname } from "next/navigation"
 import { useSelector } from "react-redux"
+import { RootState } from "@/store"
+import { ChartBar } from "lucide-react"
 
 // Shared
 import {
@@ -20,7 +22,6 @@ import {
     SidebarMenuItem,
 } from "@/shared/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu"
-import { RootState } from "@/store"
 
 // Features
 import { useLogoutMutation } from "@/features/auth/service"
@@ -31,6 +32,11 @@ const items = [
         title: "Products",
         url: "/dashboard/products",
         icon: <Book />,
+    },
+    {
+        title: "Analytics",
+        url: "/dashboard/products-analytics",
+        icon: <ChartBar />,
     },
 ]
 
