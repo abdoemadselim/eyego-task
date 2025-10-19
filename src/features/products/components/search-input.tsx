@@ -13,6 +13,14 @@ export default function SearchInput({ disabled }: { disabled?: boolean }) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
+    const MAX_SEARCH_LENGTH = 50;
+
+    // Get search value from URL and validate its length
+    const searchValue = searchParams.get('search')?.toString() || '';
+    const validatedSearchValue = searchValue.length > MAX_SEARCH_LENGTH
+        ? searchValue.substring(0, MAX_SEARCH_LENGTH)
+        : searchValue;
+
     // Update the url (update the search param to the new search value from the input)
     const handleSearch = useDebouncedCallback((value) => {
         const params = new URLSearchParams();
@@ -34,8 +42,8 @@ export default function SearchInput({ disabled }: { disabled?: boolean }) {
                 <Input
                     disabled={disabled}
                     placeholder="Bluetooth Headset"
-                    maxLength={50}
-                    defaultValue={searchParams.get('search')?.toString()} // To set the current search value in URL when refreshing the page
+                    maxLength={MAX_SEARCH_LENGTH}
+                    defaultValue={validatedSearchValue} // To set the current search value in URL when refreshing the page
                     onChange={(event) => handleSearch(event.target.value)}
                     className={`pl-10  ${disabled ? "bg-gray-200" : "bg-white"}`}
                 />

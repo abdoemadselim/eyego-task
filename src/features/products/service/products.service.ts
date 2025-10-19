@@ -109,6 +109,6 @@ export const topProductsSalesData = {
             id: 5,
             product_name: 'Xiaomi 14',
             sales: 500,
-        },
+        }
     ],
 }

@@ -36,14 +36,19 @@ const chartConfig = {
 
 export default function TopProductsSalesChart({ productsData, productsCount }: { productsData: Pick<ProductType, "product_name" | "sales">[], productsCount: number }) {
     const [chartData] = useState(() => {
-        return productsData.sort((a, b) => b.sales - a.sales).slice(0, productsCount)
+        return productsData.sort((a, b) => b.sales - a.sales).slice(0, productsCount).map((product) => {
+            return {
+                product_name: product.product_name || 'N/A',
+                sales: product.sales || 0,
+            }
+        })
     })
 
     return (
         <Card className="w-fit">
             <CardHeader>
                 <CardTitle> Top Products Sales </CardTitle>
-                <CardDescription> Showing the top {productsCount} products by sales </CardDescription>
+                <CardDescription> Showing the top {Math.min(productsCount, productsData.length)} products by sales </CardDescription>
             </CardHeader>
             <CardContent className="sm:px-6 px-2">
                 <ChartContainer config={chartConfig} className="min-h-[200px] sm:max-w-full max-w-[220px]">
@@ -74,7 +79,7 @@ export default function TopProductsSalesChart({ productsData, productsCount }: {
             </CardContent>
             <CardFooter className="flex-col items-start gap-2 text-sm">
                 <div className="text-muted-foreground leading-none">
-                    Showing the top {productsCount} products by sales
+                    Showing the top {Math.min(productsCount, productsData.length)} products by sales
                 </div>
             </CardFooter>
         </Card>
