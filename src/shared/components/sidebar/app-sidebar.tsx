@@ -33,11 +33,6 @@ const items = [
         url: "/dashboard/products",
         icon: <Book />,
     },
-    {
-        title: "Analytics",
-        url: "/dashboard/products-analytics",
-        icon: <ChartBar />,
-    },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
