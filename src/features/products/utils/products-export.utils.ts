@@ -106,6 +106,7 @@ export const handlePdfExport = async (data: any[]) => {
 };
 
 export const handleXlsxExport = async (data: any[]) => {
+  // The entire excel sheet file
   const workbook = XLSX.utils.book_new();
 
   // Prepare data with formatted values
@@ -136,79 +137,6 @@ export const handleXlsxExport = async (data: any[]) => {
     { wch: 12 }, // Price
     { wch: 18 }, // Created At
   ];
-
-  // Style title cells
-  const titleCell = worksheet['A1'];
-  if (titleCell) {
-    titleCell.s = {
-      font: { bold: true, sz: 16, color: { rgb: "FFFFFF" } },
-    }
-  }
-
-  const dateCell = worksheet['A2'];
-  if (dateCell) {
-    dateCell.s = {
-      font: { sz: 10, color: { rgb: "FFFFFF" } },
-      fill: { fgColor: { rgb: "2563EB" } },
-      alignment: { horizontal: "center", vertical: "center" }
-    };
-  }
-
-  const totalCell = worksheet['A3'];
-  if (totalCell) {
-    totalCell.s = {
-      font: { sz: 10, bold: true, color: { rgb: "FFFFFF" } },
-      fill: { fgColor: { rgb: "2563EB" } },
-      alignment: { horizontal: "center", vertical: "center" }
-    };
-  }
-
-  // Style header row (now at row 5, index 4)
-  const headerRow = 5;
-  const headers = ['A', 'B', 'C', 'D', 'E'];
-  headers.forEach(col => {
-    const cellRef = `${col}${headerRow}`;
-    if (worksheet[cellRef]) {
-      worksheet[cellRef].s = {
-        font: { bold: true, color: { rgb: "FFFFFF" }, sz: 11 },
-        fill: { fgColor: { rgb: "2563EB" } },
-        alignment: { horizontal: "left", vertical: "center" },
-        border: {
-          top: { style: "thin", color: { rgb: "000000" } },
-          bottom: { style: "thin", color: { rgb: "000000" } },
-          left: { style: "thin", color: { rgb: "000000" } },
-          right: { style: "thin", color: { rgb: "000000" } }
-        }
-      };
-    }
-  });
-
-  // Style data cells with alternating row colors
-  const dataStartRow = headerRow + 1;
-  for (let i = 0; i < formattedData.length; i++) {
-    const rowNum = dataStartRow + i;
-    const isEvenRow = i % 2 === 0;
-
-    headers.forEach((col, colIndex) => {
-      const cellRef = `${col}${rowNum}`;
-      if (worksheet[cellRef]) {
-        worksheet[cellRef].s = {
-          font: { sz: 10 },
-          fill: { fgColor: { rgb: isEvenRow ? "FFFFFF" : "F8FAFC" } },
-          alignment: {
-            horizontal: colIndex === 2 || colIndex === 3 ? "center" : "left",
-            vertical: "center"
-          },
-          border: {
-            top: { style: "thin", color: { rgb: "E5E7EB" } },
-            bottom: { style: "thin", color: { rgb: "E5E7EB" } },
-            left: { style: "thin", color: { rgb: "E5E7EB" } },
-            right: { style: "thin", color: { rgb: "E5E7EB" } }
-          }
-        };
-      }
-    });
-  }
 
   // Set row heights
   if (!worksheet['!rows']) worksheet['!rows'] = [];
